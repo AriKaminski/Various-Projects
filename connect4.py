@@ -9,54 +9,50 @@ def create_board():
     board = np.zeros((row_count,column_count))
     return board
 
-#If row[0] is occupied, searches upward for empty spot, 0
+#If row[0] is occupied, searches upward for empty spot, = 0
 def next_open_row(board, col):
     for row in range(row_count):
             if board[row][col] == 0:
                 return row
 
-#Prints the board in a regular fashion
+#Prints the board in a regular fashion (0,0) in bottom left
 def print_board(board):
     print(board[::-1,:])
     
 def check_winning_move(board):
     #Check horizontal, update for longer board sizes. (x = 4 - Row_Count) is the number to get len(Rowcount(x))
-    for r in range(row_count-3):
-        for c in range(column_count-3):
-            if (board[r][c] == 1 and board[r][c + 1] == 1 and board[r][c+2] == 1 and board[r][c+3] == 1):
-                print('Player 1 Wins - horizontal')
-                sys.exit()
-            elif (board[r][c] == 2 and board[r][c + 1] == 2 and board[r][c+2] == 2 and board[r][c+3] == 2):
-                print('Player 2 Wins - horizontal')
-                sys.exit()
+    for r in range(row_count - 3):
+        for c in range(column_count - 3):
+            if (board[r][c] != 0 and board[r][c] == board[r][c + 1]
+                and board[r][c + 1] == board[r][c + 2]
+                and board[r][c + 2] == board[r][c + 3]):
+                print('Player', int(board[r][c]), 'wins! Horizontal')
                 
     #Check Vertical winning moves
-    for r in range(row_count-3):
-        for c in range(column_count-3):
-            if (board[r][c] == 1 and board[r+1][c] == 1 and board[r+2][c] == 1 and board[r+3][c] == 1):
-                print('Player 1 Wins - vertical')
-                sys.exit()
-            elif (board[r][c] == 2 and board[r+1][c] == 1 and board[r+2][c] == 1 and board[r+3][c] == 2):
-                print('Player 2 Wins - vertical')
+    for r in range(row_count - 3):
+        for c in range(column_count - 3):
+            if (board[r][c] != 0 and board[r][c] == board[r + 1][c]
+                and board[r + 1][c] == board[r + 2][c]
+                and board[r + 2][c] == board[r + 3][c]):
+                print('Player', int(board[r][c]), 'wins! Vertical')
                 sys.exit()
     #Downwards check but the board is flipped when printed, appears as upward and won as upward
-    for r in range(row_count-3):
-        for c in range(column_count-3):
-            if (board[r][c] == 1 and board[r+1][c+1] == 1 and board[r+2][c+2] == 1 and board[r+3][c+3] == 1):
-                print('Player 1 Wins - Upward Diagonal')
-                sys.exit()
-            elif (board[r][c] == 2 and board[r+1][c + 1] == 2 and board[r+2][c+2] and board[r+3][c+3] == 2):
-                print('Player 2 Wins - Upward Diagonal')
+    for r in range(row_count - 3):
+        for c in range(column_count - 3):
+            if (board[r][c] != 0 and board[r][c] == board[r + 1][c + 1]
+                and board[r + 1][c + 1] == board[r + 2][c + 2]
+                and board[r + 2][c + 2] == board[r + 3][c + 3]):
+                print('Player', int(board[r][c]), 'wins! Upwards diagonal')
                 sys.exit()
     #Upwards check but the board is flipped when printed, appears as a downwards check and won as downwards
-    for r in range(row_count-3):
-        for c in range(column_count-3):
-            if (board[r+3][c] and board[r+2][c+1] == 1 and board[r+1][c+2] == 1 and board[r][c+3] == 1):
-                print('Player 1 Wins - Downward Diagonal')
+    for r in range(row_count - 3):
+        for c in range(column_count - 3):
+            if (board[r + 3][c] != 0 and board[r + 3][c] == board[r + 2][c + 1]
+                and board[r + 2][c + 1] == board[r + 1][c + 2]
+                and board[r + 1][c + 2] == board[r][c + 3]):
+                print('Player', int(board[r][c]), 'wins! Downwards diagonal')
                 sys.exit()
-            elif (board[r+3][c] == 2 and board[r+2][c+1] == 2 and board[r+1][c+2] == 2 and board[r][c+3] == 2):
-                print('Player 2 Wins - Downward Diagonal')
-                sys.exit()
+
 
 def main():
     board = create_board()
@@ -80,8 +76,8 @@ def main():
         elif(turn == 1):
             print('Player 2 turn')
             try:
-                #move = int(input('Make a move on the x-axis: ')) -1
-                move = random.choice((1,6))
+                move = int(input('Make a move on the x-axis: ')) -1
+                #move = random.choice((1,6))
             except:
                 print('please enter a valid command')
             row = next_open_row(board,move)
