@@ -9,7 +9,7 @@ def create_board():
     board = np.zeros((row_count,column_count))
     return board
 
-#If row[0] is occupied, searches upward for empty spot, = 0
+#If row[0] is occupied, searches up rows for empty spot that = 0
 def next_open_row(board, col):
     for row in range(row_count):
             if board[row][col] == 0:
